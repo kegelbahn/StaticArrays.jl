@@ -5,7 +5,7 @@ Used to signify that a dimension of an array is not known statically.
 """
 struct Dynamic end
 
-const StaticDimension = Union{Int, Dynamic}
+const StaticDimension = Union{Integer, Dynamic}
 
 """
     dimmatch(x::StaticDimension, y::StaticDimension)

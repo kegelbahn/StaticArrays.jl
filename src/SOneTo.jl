@@ -4,10 +4,10 @@
 Return a statically-sized `AbstractUnitRange` starting at `1`, functioning as the `axes` of
 a `StaticArray`.
 """
-struct SOneTo{n} <: AbstractUnitRange{Int}
+struct SOneTo{n} <: AbstractUnitRange{Integer}
 end
 
-SOneTo(n::Int) = SOneTo{n}()
+SOneTo(n::Integer) = SOneTo{n}()
 function SOneTo{n}(r::AbstractUnitRange) where n
     ((first(r) == 1) & (last(r) == n)) && return SOneTo{n}()
 
@@ -24,7 +24,7 @@ Base.axes(S::Base.Slice{<:SOneTo}) = (S.indices,)
 Base.unsafe_indices(S::Base.Slice{<:SOneTo}) = (S.indices,)
 Base.axes1(S::Base.Slice{<:SOneTo}) = S.indices
 
-@propagate_inbounds function Base.getindex(s::SOneTo, i::Int)
+@propagate_inbounds function Base.getindex(s::SOneTo, i::Integer)
     @boundscheck checkbounds(s, i)
     return i
 end
@@ -34,7 +34,7 @@ end
 end
 
 Base.first(::SOneTo) = 1
-Base.last(::SOneTo{n}) where {n} = n::Int
+Base.last(::SOneTo{n}) where {n} = n::Integer
 
 @pure function Base.iterate(::SOneTo{n}) where {n}
     if n::Int < 1
@@ -43,8 +43,8 @@ Base.last(::SOneTo{n}) where {n} = n::Int
         (1, 1)
     end
 end
-function Base.iterate(::SOneTo{n}, s::Int) where {n}
-    if s < n::Int
+function Base.iterate(::SOneTo{n}, s::Integer) where {n}
+    if s < n::Integer
         s2 = s + 1
         return (s2, s2)
     else
@@ -56,14 +56,14 @@ function Base.getproperty(::SOneTo{n}, s::Symbol) where {n}
     if s === :start
         return 1
     elseif s === :stop
-        return n::Int
+        return n::Integer
     else
         error("type SOneTo has no property $s")
     end
 end
 
 function Base.show(io::IO, ::SOneTo{n}) where {n}
-    print(io, "SOneTo(", n::Int, ")")
+    print(io, "SOneTo(", n::Integer, ")")
 end
 
 Base.@pure function Base.checkindex(::Type{Bool}, ::SOneTo{n1}, ::SOneTo{n2}) where {n1, n2}
