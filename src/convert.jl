@@ -17,6 +17,10 @@ AbstractArray{T,N}(sa::StaticArray{S,T,N}) where {S,T,N} = sa
 AbstractArray{T}(sa::StaticArray{S,U}) where {S,T,U} = similar_type(typeof(sa),T,Size(sa))(sa)
 AbstractArray{T,N}(sa::StaticArray{S,U,N}) where {S,T,U,N} = similar_type(typeof(sa),T,Size(sa))(sa)
 
+# support conversion to AbstractUnitRange: AS
+# AbstractUnitRange{T}(s::SOneTo{n} where n) where {T} = s
+convert(::Type{AbstractUnitRange{Int}}, r::SOneTo{n} where n) = r
+
 # Constructing a Tuple from a StaticArray
 @inline Tuple(a::StaticArray) = unroll_tuple(a, Length(a))
 

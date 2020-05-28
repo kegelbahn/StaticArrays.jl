@@ -4,7 +4,7 @@
 Return a statically-sized `AbstractUnitRange` starting at `1`, functioning as the `axes` of
 a `StaticArray`.
 """
-struct SOneTo{n} <: AbstractUnitRange{Integer}
+struct SOneTo{n} <: AbstractUnitRange{Int}
 end
 
 SOneTo(n::Integer) = SOneTo{n}()
@@ -33,8 +33,9 @@ end
     return s2
 end
 
+# TODO: make sure returned types of first and last coincide 
 Base.first(::SOneTo) = 1
-Base.last(::SOneTo{n}) where {n} = n::Integer
+Base.last(::SOneTo{n}) where {n} = n # ::Integer
 
 @pure function Base.iterate(::SOneTo{n}) where {n}
     if n::Int < 1
@@ -43,8 +44,9 @@ Base.last(::SOneTo{n}) where {n} = n::Integer
         (1, 1)
     end
 end
-function Base.iterate(::SOneTo{n}, s::Integer) where {n}
-    if s < n::Integer
+#AS
+function Base.iterate(::SOneTo{n}, s::Integer) where {n} # ,T<:Integer
+    if s < n # T(n) # ::Integer
         s2 = s + 1
         return (s2, s2)
     else
