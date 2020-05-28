@@ -17,8 +17,8 @@ import Base: sqrt, exp, log
 using LinearAlgebra
 import LinearAlgebra: transpose, adjoint, dot, eigvals, eigen, lyap, tr,
                       kron, diag, norm, dot, diagm, lu, svd, svdvals,
-                      factorize, ishermitian, issymmetric, isposdef, normalize,
-                      normalize!, Eigen, det, logdet, cross, diff, qr, \
+                      factorize, ishermitian, issymmetric, isposdef, issuccess, normalize,
+                      normalize!, Eigen, det, logdet, logabsdet, cross, diff, qr, \
 using LinearAlgebra: checksquare
 
 export SOneTo
@@ -123,9 +123,12 @@ include("abstractarray.jl")
 include("indexing.jl")
 include("broadcast.jl")
 include("mapreduce.jl")
+include("sort.jl")
 include("arraymath.jl")
 include("linalg.jl")
+include("matrix_multiply_add.jl")
 include("matrix_multiply.jl")
+include("lu.jl")
 include("det.jl")
 include("inv.jl")
 include("solve.jl")
@@ -136,7 +139,6 @@ include("lyap.jl")
 include("triangular.jl")
 include("cholesky.jl")
 include("svd.jl")
-include("lu.jl")
 include("qr.jl")
 include("deque.jl")
 include("flatten.jl")
